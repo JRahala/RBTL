@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link href = {{ url_for('static', filename='style.css') }} rel = 'stylesheet' type = 'text/css'/>
+</head>
+
+<body>
+
+	<div class = 'card' id = 'welcome-card'> 
+
+		<h1> Read Between the Lines </h1>
+
+		<br>
+		Username   : <input type = 'text' id = 'username'>
+		Room Name  : <input type = 'text' id = 'room-name'>
+
+		<br>
+		<button onclick = 'createRoom()'> create room </button>
+		<button onclick = 'joinRoom()'> join room </button>
+
+		<div id = 'welcome-error' style = 'color: red'></div>
+
+	</div>
+	
+	<div class = 'card' id = 'room-card'> 
+
+		<h1> Room : <span id = 'waiting-room-name'></span> </h1>
+		<h3> Host : <span id = 'waiting-room-host'></span> </h3>
+
+		<div class = 'room-chat'> </div>
+		Chat: <input type = 'text' id = 'waiting-room-chat'>
+		<button onclick = 'chat("waiting-room-chat")'> Send message </button>
+
+		<button id = 'waiting-room-start' disabled = True onclick = 'startGame()'> [Host] start game </button>
+		
+	</div>
+	
+	<div class = 'card' id = 'round-card'> 
+
+		<h1> Round abc </h1>
+		<p id = 'madlib'> </p>
+	
+	</div>
+	
+	<div class = 'card' id = 'summary-card'> </div>
+	<div class = 'card' id = 'end-card'> </div>
+
+</body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script src = {{ url_for('static', filename='script.js') }}> </script>
+
+
+</html>

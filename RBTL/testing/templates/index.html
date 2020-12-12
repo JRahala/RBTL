@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html>
+
+<head>
+</head>
+
+<body>
+
+Username : <input type = 'text' id = 'username'/>
+Room Name : <input type = 'text' id = 'room_name'/>
+
+<button onclick = 'host()'> host game </button>
+<button onclick = 'join()'> join game </button>
+
+<br> <input type = 'text' placeholder = 'Type in your message' id = 'msg_input' />
+<button onclick = 'send_msg()'> Send </button>
+<button onclick = 'start_task()'> Start Task </button>
+
+
+<div id = 'msgs' style = 'background-color: #eee; border: grey'> </div>
+
+</body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+
+    var socket = io();
+
+    function get_username(){
+    	return document.getElementById('username').value;
+    }
+
+    function get_room(){
+    	return document.getElementById('room_name').value;
+    }
+
+    function join(){
+    	socket.emit('join_game', data = {'user': get_username(), 'room': get_room()});
+    }
+
+    function host(){
+    	socket.emit('host_game', data = {'user': get_username(), 'room': get_room()});
+    }
+
+    function get_msg(){
+    	return document.getElementById('msg_input').value;
+    }
+
+    function send_msg(){
+    	socket.emit('send_msg', data = {'user': get_username(), 'room': get_room(), msg: get_msg()})
+    }
+
+    function start_task(){
+    	socket.emit('start_task', data = {})
+    }
+
+    socket.on('new_user', function(data){
+    	let msg_board = document.getElementById('msgs');
+    	msg_board.innerHTML += `<b>${data['user']}</b> joined the room<br>`;  
+    })
+
+    socket.on('recieve_msg', function(data){
+    	let msg_board = document.getElementById('msgs');
+    	msg_board.innerHTML += `<b>${data['user']}</b>: ${data['msg']}<br>`;
+    })
+
+    socket.on('task_fin', function(data){
+    	let msg_board = document.getElementById('msgs');
+    	msg_board.innerHTML += `<b>${data['user']}</b>: ${data['msg']}<br>`;
+    })
+
+
+</script>
+
+</html>

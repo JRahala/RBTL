@@ -1,0 +1,13 @@
+.card{
+
+	width: 800px;
+	height: 600px;
+
+	background-color: #fff;
+	border: solid 3px black;
+	display: none;
+
+	margin: auto;
+	margin-top: 40px;
+
+}
